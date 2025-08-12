@@ -36,8 +36,10 @@ get_top_memory_processes() {
 get_additional_stats() {
   echo "OS: $(uname -a)"
   echo "Uptime: $(uptime -p)"
-  echo -n "Load Average: " && uptime | awk -F'load average: ' '{print $2}'
+  echo "Load Average: $(uptime | awk -F'load average: ' '{print $2}')"
   echo "Logged in Users: $(who | wc -l)"
+  grep "Failed password" /var/log/auth.log | wc -l
+  echo "Failed login attempts: $(grep "Failed password" /var/log/auth.log | wc -l)"
 }
 
 main() {
